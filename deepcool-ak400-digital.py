@@ -5,7 +5,7 @@ import psutil
 
 # Default values for Vendor ID and Product ID
 DEFAULT_VENDOR_ID = 0x3633  # DeepCool's Vendor ID
-DEFAULT_PRODUCT_ID = 0x0002  # AK620's Product ID
+DEFAULT_PRODUCT_ID = 0x0001  # AK400's Product ID
 INTERVAL = 2
 
 # Check for command-line arguments and assign them if provided
@@ -52,7 +52,7 @@ def get_cpu_temperature(label="CPU"):
 
 def get_temperature():
     try:
-        temp = round(psutil.sensors_temperatures()['nct6687'][0].current)
+        temp = round(psutil.sensors_temperatures()['nct6798'][0].current)
     except KeyError:
         temp = get_cpu_temperature()
     return get_data(value=temp, mode='temp')
@@ -76,7 +76,7 @@ try:
         time.sleep(INTERVAL)
 except IOError as ex:
     print(ex)
-    print("Ensure that the AK620 is connected and the script has the correct Vendor ID and Product ID.")
+    print("Ensure that the AK400 is connected and the script has the correct Vendor ID and Product ID.")
     print("Update the VENDOR_ID and PRODUCT_ID variables in this script or pass them as command-line arguments.")
 except KeyboardInterrupt:
     print("Script terminated by user.")
